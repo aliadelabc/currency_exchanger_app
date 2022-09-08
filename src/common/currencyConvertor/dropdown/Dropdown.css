@@ -1,0 +1,14 @@
+.dropdownContainer {
+  width: 100%;
+}
+.labelContainer {
+  display: block;
+  margin: auto;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.selectContainer {
+  padding: 10px;
+  width: 100%;
+}

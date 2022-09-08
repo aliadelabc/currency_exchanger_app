@@ -1,0 +1,8 @@
+.cardContainer {
+  border: 1px solid lightgray;
+  padding: 20px;
+  border-radius: 8pt;
+}
+.cardContent {
+  text-align: center;
+}

@@ -1,0 +1,14 @@
+.buttonSec {
+  padding: 10px;
+  cursor: pointer;
+  background-color: transparent;
+  color: rgb(34, 124, 214);
+  border: 0px;
+}
+.buttonSec:disabled {
+  padding: 10px;
+  cursor: pointer;
+  background-color: transparent;
+  color: rgb(226, 226, 226);
+  border: 0px;
+}

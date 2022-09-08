@@ -1,0 +1,21 @@
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.buttonPrim {
+  padding: 10px;
+  cursor: pointer;
+  background-color: rgb(34, 124, 214);
+  color: white;
+  border: 0px;
+  border-radius: 4pt;
+}
+.buttonPrim:disabled {
+  padding: 10px;
+  cursor: pointer;
+  background-color: rgb(226, 226, 226);
+  color: white;
+  border: 0px;
+  border-radius: 4pt;
+}

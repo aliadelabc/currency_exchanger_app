@@ -1,0 +1,49 @@
+.inputsContainer {
+  border: 1px solid lightgray;
+  padding: 20px;
+}
+.convertorInputsContainer {
+  display: flex;
+  justify-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.fromToContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+}
+.amountContainer {
+  width: 50%;
+}
+
+.resultContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.CardsContainer {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  margin-top: 20px;
+  grid-gap: 50px;
+}
+@media only screen and (max-width: 1200px) {
+  /*Tablets [601px -> 1200px]*/
+  .CardsContainer {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-top: 20px;
+    grid-gap: 50px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  /* smartphones*/
+  .CardsContainer {
+    display: grid;
+    grid-template-columns: auto;
+    margin-top: 20px;
+    grid-gap: 50px;
+  }
+}
