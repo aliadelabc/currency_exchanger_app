@@ -1,0 +1,24 @@
+.details {
+  padding: 40px;
+}
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav {
+  margin-bottom: 100px;
+}
+
+@media only screen and (max-width: 600px) {
+  /* smartphones*/
+  .nav {
+    margin-bottom: 130px;
+  }
+}
+@media only screen and (max-width: 320px) {
+  /* smartphones*/
+  .nav {
+    margin-bottom: 200px;
+  }
+}
