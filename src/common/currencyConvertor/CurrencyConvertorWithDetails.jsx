@@ -35,13 +35,19 @@ const CurrencyConvertorWithDetails = () => {
   };
   const handlefromChange = (event) => {
     setFrom(event.target.value);
+    setConvertedAmount(0);
+    setRate("XX.XX");
+    setLatestCurrencies(null);
   };
   const handletoChange = (event) => {
     setTo(event.target.value);
+    setConvertedAmount(0);
+    setRate("XX.XX");
+    setLatestCurrencies(null);
   };
   const handleConversion = () => {
     let myHeaders = new Headers();
-    myHeaders.append("apikey", "W5JX4K02BmQ8QE6wq7kCM3ox7y6saL2M");
+    myHeaders.append("apikey", "GELwasI0lihGpg332rUSIszNfwVCIQ28");
 
     let requestOptions = {
       method: "GET",
@@ -66,7 +72,7 @@ const CurrencyConvertorWithDetails = () => {
 
   const getLatestCurrencies = () => {
     let myHeaders = new Headers();
-    myHeaders.append("apikey", "W5JX4K02BmQ8QE6wq7kCM3ox7y6saL2M");
+    myHeaders.append("apikey", "GELwasI0lihGpg332rUSIszNfwVCIQ28");
 
     let requestOptions = {
       method: "GET",
@@ -89,7 +95,7 @@ const CurrencyConvertorWithDetails = () => {
   useEffect(() => {
     const getCurrencies = () => {
       let myHeaders = new Headers();
-      myHeaders.append("apikey", "W5JX4K02BmQ8QE6wq7kCM3ox7y6saL2M");
+      myHeaders.append("apikey", "GELwasI0lihGpg332rUSIszNfwVCIQ28");
 
       let requestOptions = {
         method: "GET",

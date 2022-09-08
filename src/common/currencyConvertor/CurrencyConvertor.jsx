@@ -4,14 +4,12 @@ import React, { useEffect, useState } from "react";
 import NumberInput from "../numberInput/NumberInput";
 import Dropdown from "./dropdown/Dropdown.jsx";
 import TwoWayArrow from "../twoWayArrow/TwoWayArrow";
-import CurrencyCard from "../currencyCard/CurrencyCard";
 //import css
 import "./CurrencyConvertor.css";
 import PrimaryButton from "../buttons/primaryButton/PrimaryButton";
-import SecondryButton from "../buttons/secondryButton/SecondryButton";
+import Chart from "../lineChart/LineChart";
 
 const CurrencyConvertorWithDetails = ({ currency }) => {
-  console.log(currency);
   const [to, setTo] = useState(currency);
   const [from, setFrom] = useState("EUR");
   const [amount, setAmount] = useState(0);
@@ -19,19 +17,60 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
   const [convertedAmount, setConvertedAmount] = useState("XX.XX");
   const [rate, setRate] = useState("XX.XX");
   const [loading, setLoading] = useState(0);
-
+  const [historicalData, setHistoricalData] = useState([]);
   const handleAmount = (event) => {
     setAmount(event.target.value);
   };
   const handlefromChange = (event) => {
     setFrom(event.target.value);
+    setConvertedAmount(0);
+    setRate("XX.XX");
   };
   const handletoChange = (event) => {
     setTo(event.target.value);
+    setConvertedAmount(0);
+    setRate("XX.XX");
+  };
+
+  const handleHistoricalData = () => {
+    const subtractYears = (numOfYears, date = new Date()) => {
+      date.setFullYear(date.getFullYear() - numOfYears);
+
+      return date;
+    };
+
+    let myHeaders = new Headers();
+    myHeaders.append("apikey", "GELwasI0lihGpg332rUSIszNfwVCIQ28");
+
+    let requestOptions = {
+      method: "GET",
+      redirect: "follow",
+      headers: myHeaders,
+    };
+    setLoading(true);
+    let num_of_years = 1;
+    let end_date = new Date();
+    let start_date = subtractYears(num_of_years, new Date());
+    let start_date_string = start_date.toISOString().slice(0, 10);
+    let end_date_string = end_date.toISOString().slice(0, 10);
+    fetch(
+      `https://api.apilayer.com/fixer/timeseries?start_date=${start_date_string}&end_date=${end_date_string}&symbols=${[
+        from,
+        to,
+      ]}`,
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => {
+        let data = JSON.parse(result);
+        setHistoricalData(data.rates);
+        setLoading(false);
+      })
+      .catch((error) => console.log("error", error));
   };
   const handleConversion = () => {
     let myHeaders = new Headers();
-    myHeaders.append("apikey", "W5JX4K02BmQ8QE6wq7kCM3ox7y6saL2M");
+    myHeaders.append("apikey", "GELwasI0lihGpg332rUSIszNfwVCIQ28");
 
     let requestOptions = {
       method: "GET",
@@ -48,6 +87,7 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
         let data = JSON.parse(result);
         setConvertedAmount(parseFloat(data.result).toFixed(2));
         setRate((data.result / amount).toFixed(2));
+        handleHistoricalData();
         setLoading(false);
       })
       .catch((error) => console.log("error", error));
@@ -56,7 +96,7 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
   useEffect(() => {
     const getCurrencies = () => {
       let myHeaders = new Headers();
-      myHeaders.append("apikey", "W5JX4K02BmQ8QE6wq7kCM3ox7y6saL2M");
+      myHeaders.append("apikey", "GELwasI0lihGpg332rUSIszNfwVCIQ28");
 
       let requestOptions = {
         method: "GET",
@@ -125,14 +165,14 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
               />
               <div
                 style={{
-                  width: "50%",
+                  width: "100%",
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "space-between",
+                  justifyContent: "flex-end",
                 }}
               >
                 <input
-                  style={{ width: "45%", padding: "20px", marginTop: "10px" }}
+                  style={{ width: "47.5%", padding: "20px", marginTop: "10px" }}
                   name="convertedValue"
                   type={"text"}
                   value={`${convertedAmount} ${to}`}
@@ -145,15 +185,7 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
           "Loading..."
         )}
       </div>
-      {/* <div className="CardsContainer">
-        <CurrencyCard
-          key={}
-          symbol={}
-          rate={}
-          convertedAmount={Object.values(latestCurrencies)[i] * amount}
-          base={from}
-        />
-      </div> */}
+      <Chart incomingData={historicalData} dataKey1={from} dataKey2={to} />
     </>
   );
 };
