@@ -10,8 +10,9 @@ import "./CurrencyConvertor.css";
 import PrimaryButton from "../buttons/primaryButton/PrimaryButton";
 import SecondryButton from "../buttons/secondryButton/SecondryButton";
 
-const CurrencyConvertorWithDetails = () => {
-  const [to, setTo] = useState("USD");
+const CurrencyConvertorWithDetails = ({ currency }) => {
+  console.log(currency);
+  const [to, setTo] = useState(currency);
   const [from, setFrom] = useState("EUR");
   const [amount, setAmount] = useState(0);
   const [currencies, setCurrencies] = useState(null);
@@ -30,7 +31,7 @@ const CurrencyConvertorWithDetails = () => {
   };
   const handleConversion = () => {
     let myHeaders = new Headers();
-    myHeaders.append("apikey", "9MhaOBFh2Ya1VvL3qN34tBY054xAAlYK");
+    myHeaders.append("apikey", "W5JX4K02BmQ8QE6wq7kCM3ox7y6saL2M");
 
     let requestOptions = {
       method: "GET",
@@ -55,7 +56,7 @@ const CurrencyConvertorWithDetails = () => {
   useEffect(() => {
     const getCurrencies = () => {
       let myHeaders = new Headers();
-      myHeaders.append("apikey", "9MhaOBFh2Ya1VvL3qN34tBY054xAAlYK");
+      myHeaders.append("apikey", "W5JX4K02BmQ8QE6wq7kCM3ox7y6saL2M");
 
       let requestOptions = {
         method: "GET",
@@ -101,7 +102,7 @@ const CurrencyConvertorWithDetails = () => {
                   label={"To"}
                   data={Object.keys(currencies)}
                   handleChange={handletoChange}
-                  defaultValue={"USD"}
+                  defaultValue={currency}
                   readOnly={amount <= 0}
                 />
               </div>
