@@ -8,7 +8,7 @@ import "./Home.css";
 const Home = () => {
   return (
     <div className="home">
-      <div style={{ marginBottom: "100px" }}>
+      <div className="nav">
         <Header />
       </div>
       <h2 about="currency exchanger">Currency Exchanger</h2>

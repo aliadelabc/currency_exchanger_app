@@ -1,3 +1,19 @@
 .home {
-    padding: 40px;
+  padding: 40px;
+}
+.nav {
+  margin-bottom: 100px;
+}
+
+@media only screen and (max-width: 600px) {
+  /* smartphones*/
+  .nav {
+    margin-bottom: 130px;
+  }
+}
+@media only screen and (max-width: 320px) {
+  /* smartphones*/
+  .nav {
+    margin-bottom: 200px;
+  }
 }
