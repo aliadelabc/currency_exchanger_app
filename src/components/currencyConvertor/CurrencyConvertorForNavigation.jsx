@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useReducer } from "react";
 //import common components
 import NumberInput from "../../common/numberInput/NumberInput";
-import Dropdown from "./dropdown/Dropdown";
+import Dropdown from "../../common/dropdown/Dropdown";
 import TwoWayArrow from "../../common/twoWayArrow/TwoWayArrow";
 //import css
 import "./CurrencyConvertor.css";

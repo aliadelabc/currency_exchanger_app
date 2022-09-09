@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 //import common components
 import NumberInput from "../../common/numberInput/NumberInput";
-import Dropdown from "./dropdown/Dropdown.jsx";
+import Dropdown from "../../common/dropdown/Dropdown.jsx";
 import TwoWayArrow from "../../common/twoWayArrow/TwoWayArrow";
 import CurrencyCard from "../../common/currencyCard/CurrencyCard";
 //import css
