@@ -19,3 +19,10 @@
   border: 0px;
   border-radius: 4pt;
 }
+@media only screen and (max-width: 600px) {
+  /* smartphones*/
+  .buttonContainer {
+    margin-top: 10px;
+    justify-content: center;
+  }
+}

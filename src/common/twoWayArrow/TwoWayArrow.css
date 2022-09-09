@@ -1,0 +1,11 @@
+.arrowContainer {
+  margin-left: 10;
+  margin-right: 10;
+}
+@media only screen and (max-width: 600px) {
+  /* smartphones*/
+  .arrowContainer {
+    text-align: center;
+    transform: rotate(270deg);
+  }
+}

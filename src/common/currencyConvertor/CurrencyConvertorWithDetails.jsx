@@ -163,20 +163,13 @@ const CurrencyConvertorWithDetails = () => {
               <input
                 name="rate"
                 type={"text"}
-                style={{ width: "45%" }}
+                className="rate"
                 readOnly={true}
                 value={`1.00 ${from} = ${rate} ${to}`}
               />
-              <div
-                style={{
-                  width: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
+              <div className="convertedValueContainerWithDetails">
                 <input
-                  style={{ width: "45%", padding: "20px", marginTop: "10px" }}
+                  className="convertedValue"
                   name="convertedValue"
                   type={"text"}
                   value={`${convertedAmount} ${to}`}

@@ -1,10 +1,11 @@
 //intialize react
 import React from "react";
-
+//import css
+import "./TwoWayArrow.css";
 const TwoWayArrow = () => {
   return (
-    <div style={{ marginLeft: 10, marginRight: 10 }}>
-      <h1>⇔</h1>
+    <div>
+      <h1 className="arrowContainer">⇔</h1>
     </div>
   );
 };
