@@ -44,12 +44,19 @@ const Chart = ({ incomingData = [{}], dataKey1, dataKey2 }) => {
             <Line type="monotone" dataKey={dataKey2} stroke="#82ca9d" />
             <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
             <XAxis dataKey="date" />
-            <YAxis dataKey={dataKey2} />
+            <YAxis
+              dataKey={
+                transferredData[transferredData.length - 1][dataKey1] >
+                transferredData[transferredData.length - 1][dataKey2]
+                  ? dataKey1
+                  : dataKey2
+              }
+            />
             <Tooltip />
           </LineChart>
         </ResponsiveContainer>
       ) : (
-        "Historical Data Will Apear After Convertion..."
+        "Loading..."
       )}
     </div>
   );

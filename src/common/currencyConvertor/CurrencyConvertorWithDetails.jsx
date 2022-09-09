@@ -9,6 +9,7 @@ import CurrencyCard from "../currencyCard/CurrencyCard";
 import "./CurrencyConvertor.css";
 import PrimaryButton from "../buttons/primaryButton/PrimaryButton";
 import SecondryButton from "../buttons/secondryButton/SecondryButton";
+import { useNavigate } from "react-router-dom";
 
 const CurrencyConvertorWithDetails = () => {
   const [to, setTo] = useState("USD");
@@ -18,6 +19,7 @@ const CurrencyConvertorWithDetails = () => {
   const [convertedAmount, setConvertedAmount] = useState("XX.XX");
   const [rate, setRate] = useState("XX.XX");
   const [loading, setLoading] = useState(0);
+  const navigate = useNavigate();
   const symbols = [
     "SEK",
     "NZD",
@@ -47,7 +49,7 @@ const CurrencyConvertorWithDetails = () => {
   };
   const handleConversion = () => {
     let myHeaders = new Headers();
-    myHeaders.append("apikey", "GELwasI0lihGpg332rUSIszNfwVCIQ28");
+    myHeaders.append("apikey", process.env.REACT_APP_FIXER_API_KEY);
 
     let requestOptions = {
       method: "GET",
@@ -72,7 +74,7 @@ const CurrencyConvertorWithDetails = () => {
 
   const getLatestCurrencies = () => {
     let myHeaders = new Headers();
-    myHeaders.append("apikey", "GELwasI0lihGpg332rUSIszNfwVCIQ28");
+    myHeaders.append("apikey", process.env.REACT_APP_FIXER_API_KEY);
 
     let requestOptions = {
       method: "GET",
@@ -92,10 +94,13 @@ const CurrencyConvertorWithDetails = () => {
       .catch((error) => console.log("error", error));
   };
 
+  const handleMoreDetails = () => {
+    navigate(`/details/${from}/${currencies[from]}/${to}/${amount}`);
+  };
   useEffect(() => {
     const getCurrencies = () => {
       let myHeaders = new Headers();
-      myHeaders.append("apikey", "GELwasI0lihGpg332rUSIszNfwVCIQ28");
+      myHeaders.append("apikey", process.env.REACT_APP_FIXER_API_KEY);
 
       let requestOptions = {
         method: "GET",
@@ -182,6 +187,7 @@ const CurrencyConvertorWithDetails = () => {
                   width={"50%"}
                   title={"More Details"}
                   loading={loading}
+                  onClick={handleMoreDetails}
                 />
               </div>
             </div>

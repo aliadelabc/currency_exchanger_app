@@ -17,7 +17,11 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route exact path="/details/:currency" element={<Details />} />
+            <Route path="/details/:currency" element={<Details />} />
+            <Route
+              path="/details/:currency/:currency_full_name/:to/:amount/"
+              element={<Details />}
+            />
             <Route
               path="*"
               element={

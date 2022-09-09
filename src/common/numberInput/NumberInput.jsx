@@ -2,7 +2,7 @@
 import React from "react";
 //import css
 import "./NumberInput.css";
-const NumberInput = ({ label, name, handleAmount }) => {
+const NumberInput = ({ label, name, handleAmount, defaultValue = 0 }) => {
   return (
     <div>
       <label className="labelContainer" htmlFor={label} about={label}>
@@ -13,7 +13,7 @@ const NumberInput = ({ label, name, handleAmount }) => {
         className="inputContainer"
         name={name}
         type={"number"}
-        defaultValue={0}
+        defaultValue={defaultValue}
       />
     </div>
   );

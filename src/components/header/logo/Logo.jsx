@@ -4,6 +4,13 @@ import React from "react";
 //import css
 import "./Logo.css";
 const Logo = () => {
-  return <div className="logo">Logo</div>;
+  const handleClick = () => {
+    window.open("/", "_self");
+  };
+  return (
+    <div onClick={handleClick} className="logo">
+      Logo
+    </div>
+  );
 };
 export default Logo;
