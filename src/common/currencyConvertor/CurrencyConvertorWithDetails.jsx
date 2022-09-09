@@ -9,6 +9,7 @@ import CurrencyCard from "../currencyCard/CurrencyCard";
 import "./CurrencyConvertor.css";
 import PrimaryButton from "../buttons/primaryButton/PrimaryButton";
 import SecondryButton from "../buttons/secondryButton/SecondryButton";
+import { useNavigate } from "react-router-dom";
 
 const CurrencyConvertorWithDetails = () => {
   const [to, setTo] = useState("USD");
@@ -18,6 +19,7 @@ const CurrencyConvertorWithDetails = () => {
   const [convertedAmount, setConvertedAmount] = useState("XX.XX");
   const [rate, setRate] = useState("XX.XX");
   const [loading, setLoading] = useState(0);
+  const navigate = useNavigate();
   const symbols = [
     "SEK",
     "NZD",
@@ -35,13 +37,19 @@ const CurrencyConvertorWithDetails = () => {
   };
   const handlefromChange = (event) => {
     setFrom(event.target.value);
+    setConvertedAmount(0);
+    setRate("XX.XX");
+    setLatestCurrencies(null);
   };
   const handletoChange = (event) => {
     setTo(event.target.value);
+    setConvertedAmount(0);
+    setRate("XX.XX");
+    setLatestCurrencies(null);
   };
   const handleConversion = () => {
     let myHeaders = new Headers();
-    myHeaders.append("apikey", "9MhaOBFh2Ya1VvL3qN34tBY054xAAlYK");
+    myHeaders.append("apikey", process.env.REACT_APP_FIXER_API_KEY);
 
     let requestOptions = {
       method: "GET",
@@ -66,7 +74,7 @@ const CurrencyConvertorWithDetails = () => {
 
   const getLatestCurrencies = () => {
     let myHeaders = new Headers();
-    myHeaders.append("apikey", "9MhaOBFh2Ya1VvL3qN34tBY054xAAlYK");
+    myHeaders.append("apikey", process.env.REACT_APP_FIXER_API_KEY);
 
     let requestOptions = {
       method: "GET",
@@ -86,10 +94,13 @@ const CurrencyConvertorWithDetails = () => {
       .catch((error) => console.log("error", error));
   };
 
+  const handleMoreDetails = () => {
+    navigate(`/details/${from}/${currencies[from]}/${to}/${amount}`);
+  };
   useEffect(() => {
     const getCurrencies = () => {
       let myHeaders = new Headers();
-      myHeaders.append("apikey", "9MhaOBFh2Ya1VvL3qN34tBY054xAAlYK");
+      myHeaders.append("apikey", process.env.REACT_APP_FIXER_API_KEY);
 
       let requestOptions = {
         method: "GET",
@@ -152,20 +163,13 @@ const CurrencyConvertorWithDetails = () => {
               <input
                 name="rate"
                 type={"text"}
-                style={{ width: "45%" }}
+                className="rate"
                 readOnly={true}
                 value={`1.00 ${from} = ${rate} ${to}`}
               />
-              <div
-                style={{
-                  width: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
+              <div className="convertedValueContainerWithDetails">
                 <input
-                  style={{ width: "45%", padding: "20px", marginTop: "10px" }}
+                  className="convertedValue"
                   name="convertedValue"
                   type={"text"}
                   value={`${convertedAmount} ${to}`}
@@ -176,6 +180,7 @@ const CurrencyConvertorWithDetails = () => {
                   width={"50%"}
                   title={"More Details"}
                   loading={loading}
+                  onClick={handleMoreDetails}
                 />
               </div>
             </div>

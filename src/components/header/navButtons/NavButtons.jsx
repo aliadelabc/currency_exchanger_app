@@ -9,9 +9,11 @@ const NavButtons = () => {
   const EURUSD = "EUR USD Details";
   const EURGBP = "EUR GBP Details";
   const handleUSDClick = () => {
-    console.log("clicked");
+    window.open(`/details/USD`, "_self");
   };
-  const handleGBPClick = () => {};
+  const handleGBPClick = () => {
+    window.open(`/details/GBP`, "_self");
+  };
   return (
     <div className="navButtons">
       <NavButton title={EURUSD} handleClick={handleUSDClick} />

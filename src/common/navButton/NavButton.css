@@ -1,5 +1,8 @@
-.navButton{
-    padding: 10px;
-    border: 1px lightgray solid;
-    margin: 10px;
+.navButton {
+  padding: 10px;
+  border: 1px lightgray solid;
+  margin: 10px;
+  background-color: transparent;
+  color: rgb(34, 124, 214);
+  cursor: pointer;
 }

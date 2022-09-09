@@ -1,9 +1,15 @@
-.labelContainer{
-    display: block;
-    margin: auto;
-    margin-bottom: 5px;
+.labelContainer {
+  display: block;
+  margin: auto;
+  margin-bottom: 5px;
 }
-.inputContainer{
-    padding: 10px;
-    width: 50%;
+.inputContainer {
+  padding: 10px;
+  width: 50%;
+}
+@media only screen and (max-width: 600px) {
+  /* smartphones*/
+  .inputContainer {
+    width: max-content;
+  }
 }
