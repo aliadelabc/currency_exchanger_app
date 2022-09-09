@@ -1,31 +1,37 @@
 //intialize react
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState } from "react";
 //import common components
-import NumberInput from "../numberInput/NumberInput";
+import NumberInput from "../../common/numberInput/NumberInput";
 import Dropdown from "./dropdown/Dropdown.jsx";
-import TwoWayArrow from "../twoWayArrow/TwoWayArrow";
+import TwoWayArrow from "../../common/twoWayArrow/TwoWayArrow";
+import CurrencyCard from "../../common/currencyCard/CurrencyCard";
 //import css
 import "./CurrencyConvertor.css";
-import PrimaryButton from "../buttons/primaryButton/PrimaryButton";
-import Chart from "../lineChart/LineChart";
-import { useParams } from "react-router-dom";
+import PrimaryButton from "../../common/buttons/primaryButton/PrimaryButton";
+import SecondryButton from "../../common/buttons/secondryButton/SecondryButton";
+import { useNavigate } from "react-router-dom";
 
-const CurrencyConvertorWithDetails = ({ currency }) => {
-  const reducer = (_, newState) => {
-    return newState;
-  };
-  const params = useParams();
-  const [toParam, setToParam] = useState(params.to);
-  const amountParam = params.amount;
-  const [to, setTo] = useReducer(reducer, currency);
-  const [from, setFrom] = useReducer(reducer, currency);
+const CurrencyConvertorWithDetails = () => {
+  const [to, setTo] = useState("USD");
+  const [from, setFrom] = useState("EUR");
   const [amount, setAmount] = useState(0);
   const [currencies, setCurrencies] = useState(null);
   const [convertedAmount, setConvertedAmount] = useState("XX.XX");
   const [rate, setRate] = useState("XX.XX");
   const [loading, setLoading] = useState(0);
-  const [historicalData, setHistoricalData] = useState([]);
-
+  const navigate = useNavigate();
+  const symbols = [
+    "SEK",
+    "NZD",
+    "HKD",
+    "CNY",
+    "CHF",
+    "CAD",
+    "AUD",
+    "GBP",
+    "JPY",
+  ];
+  const [latestCurrencies, setLatestCurrencies] = useState(null);
   const handleAmount = (event) => {
     setAmount(event.target.value);
   };
@@ -33,49 +39,13 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
     setFrom(event.target.value);
     setConvertedAmount(0);
     setRate("XX.XX");
+    setLatestCurrencies(null);
   };
   const handletoChange = (event) => {
-    setToParam(null);
     setTo(event.target.value);
     setConvertedAmount(0);
     setRate("XX.XX");
-  };
-
-  const handleHistoricalData = () => {
-    const subtractYears = (numOfYears, date = new Date()) => {
-      date.setFullYear(date.getFullYear() - numOfYears);
-
-      return date;
-    };
-
-    let myHeaders = new Headers();
-    myHeaders.append("apikey", process.env.REACT_APP_FIXER_API_KEY);
-
-    let requestOptions = {
-      method: "GET",
-      redirect: "follow",
-      headers: myHeaders,
-    };
-    setLoading(true);
-    let num_of_years = 1;
-    let end_date = new Date();
-    let start_date = subtractYears(num_of_years, new Date());
-    let start_date_string = start_date.toISOString().slice(0, 10);
-    let end_date_string = end_date.toISOString().slice(0, 10);
-    fetch(
-      `https://api.apilayer.com/fixer/timeseries?start_date=${start_date_string}&end_date=${end_date_string}&symbols=${[
-        currency ? currency : from,
-        toParam ? toParam : to,
-      ]}`,
-      requestOptions
-    )
-      .then((response) => response.text())
-      .then((result) => {
-        let data = JSON.parse(result);
-        setHistoricalData(data.rates);
-        setLoading(false);
-      })
-      .catch((error) => console.log("error", error));
+    setLatestCurrencies(null);
   };
   const handleConversion = () => {
     let myHeaders = new Headers();
@@ -97,17 +67,37 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
         setConvertedAmount(parseFloat(data.result).toFixed(2));
         setRate((data.result / amount).toFixed(2));
         setLoading(false);
-        handleHistoricalData();
+        getLatestCurrencies();
       })
       .catch((error) => console.log("error", error));
   };
 
+  const getLatestCurrencies = () => {
+    let myHeaders = new Headers();
+    myHeaders.append("apikey", process.env.REACT_APP_FIXER_API_KEY);
+
+    let requestOptions = {
+      method: "GET",
+      redirect: "follow",
+      headers: myHeaders,
+    };
+
+    fetch(
+      `https://api.apilayer.com/fixer/latest?symbols=${symbols}&base=${from}`,
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => {
+        let data = JSON.parse(result);
+        setLatestCurrencies(data.rates);
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  const handleMoreDetails = () => {
+    navigate(`/details/${from}/${currencies[from]}/${to}/${amount}`);
+  };
   useEffect(() => {
-    if (currency && toParam) {
-      setFrom(currency);
-      setTo(toParam);
-      setAmount(amountParam);
-    }
     const getCurrencies = () => {
       let myHeaders = new Headers();
       myHeaders.append("apikey", process.env.REACT_APP_FIXER_API_KEY);
@@ -126,9 +116,7 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
         })
         .catch((error) => console.log("error", error));
     };
-
     getCurrencies();
-    handleHistoricalData();
   }, []);
   return (
     <>
@@ -141,7 +129,6 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
                   handleAmount={handleAmount}
                   label={"Amount"}
                   name={"amount"}
-                  defaultValue={amount}
                 />
               </div>
               <div className="fromToContainer">
@@ -150,8 +137,8 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
                   label={"From"}
                   data={Object.keys(currencies)}
                   handleChange={handlefromChange}
-                  defaultValue={currency ? currency : "EUR"}
-                  readOnly={true}
+                  defaultValue={"EUR"}
+                  readOnly={amount <= 0}
                 />
                 <TwoWayArrow />
                 <Dropdown
@@ -159,7 +146,7 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
                   label={"To"}
                   data={Object.keys(currencies)}
                   handleChange={handletoChange}
-                  defaultValue={toParam ? toParam : currency}
+                  defaultValue={"USD"}
                   readOnly={amount <= 0}
                 />
               </div>
@@ -174,19 +161,26 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
 
             <div className="resultContainer">
               <input
-                className="rate"
                 name="rate"
                 type={"text"}
+                className="rate"
                 readOnly={true}
                 value={`1.00 ${from} = ${rate} ${to}`}
               />
-              <div className="convertedValueContainer">
+              <div className="convertedValueContainerWithDetails">
                 <input
                   className="convertedValue"
                   name="convertedValue"
                   type={"text"}
                   value={`${convertedAmount} ${to}`}
                   readOnly={true}
+                />
+                <SecondryButton
+                  disabled={amount <= 0}
+                  width={"50%"}
+                  title={"More Details"}
+                  loading={loading}
+                  onClick={handleMoreDetails}
                 />
               </div>
             </div>
@@ -195,7 +189,19 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
           "Loading..."
         )}
       </div>
-      <Chart incomingData={historicalData} dataKey1={from} dataKey2={to} />
+      <div className="CardsContainer">
+        {latestCurrencies && Object.keys(latestCurrencies).length > 0
+          ? Object.keys(latestCurrencies).map((e, i) => (
+              <CurrencyCard
+                key={Object.keys(latestCurrencies)[i]}
+                symbol={Object.keys(latestCurrencies)[i]}
+                rate={Object.values(latestCurrencies)[i]}
+                convertedAmount={Object.values(latestCurrencies)[i] * amount}
+                base={from}
+              />
+            ))
+          : null}
+      </div>
     </>
   );
 };

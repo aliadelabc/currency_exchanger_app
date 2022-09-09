@@ -1,7 +1,7 @@
 //intialize react
 import React from "react";
 import PrimaryButton from "../../common/buttons/primaryButton/PrimaryButton";
-import CurrencyConvertor from "../../common/currencyConvertor/CurrencyConvertor";
+import CurrencyConvertor from "../currencyConvertor/CurrencyConvertor";
 import { useNavigate, useParams } from "react-router-dom";
 
 //import css

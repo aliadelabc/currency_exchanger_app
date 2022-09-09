@@ -1,6 +1,6 @@
 //intialize react
 import React from "react";
-import CurrencyConvertorWithDetails from "../../common/currencyConvertor/CurrencyConvertorWithDetails";
+import CurrencyConvertorWithDetails from "../currencyConvertor/CurrencyConvertorWithDetails";
 //import css
 import "./Home.css";
 const Home = () => {
