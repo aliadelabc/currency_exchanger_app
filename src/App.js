@@ -6,6 +6,7 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Details from "./components/details/Details";
 import Header from "./components/header/Header";
+import NavigationDetails from "./components/details/NavigationDetails";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/details/:currency" element={<Details />} />
+            <Route path="/details/:currency" element={<NavigationDetails />} />
             <Route
               path="/details/:currency/:currency_full_name/:to/:amount/"
               element={<Details />}
