@@ -1,24 +1,20 @@
 //intialize react
 import React, { useEffect, useState, useReducer } from "react";
 //import common components
-import NumberInput from "../numberInput/NumberInput";
-import Dropdown from "./dropdown/Dropdown.jsx";
-import TwoWayArrow from "../twoWayArrow/TwoWayArrow";
+import NumberInput from "../../common/numberInput/NumberInput";
+import Dropdown from "../../common/dropdown/Dropdown";
+import TwoWayArrow from "../../common/twoWayArrow/TwoWayArrow";
 //import css
 import "./CurrencyConvertor.css";
-import PrimaryButton from "../buttons/primaryButton/PrimaryButton";
-import Chart from "../lineChart/LineChart";
-import { useParams } from "react-router-dom";
+import PrimaryButton from "../../common/buttons/primaryButton/PrimaryButton";
+import Chart from "../../common/lineChart/LineChart";
 
-const CurrencyConvertorWithDetails = ({ currency }) => {
+const CurrencyConvertorForNavigation = ({ currency }) => {
   const reducer = (_, newState) => {
     return newState;
   };
-  const params = useParams();
-  const [toParam, setToParam] = useState(params.to);
-  const amountParam = params.amount;
   const [to, setTo] = useReducer(reducer, currency);
-  const [from, setFrom] = useReducer(reducer, currency);
+  const [from, setFrom] = useState("EUR");
   const [amount, setAmount] = useState(0);
   const [currencies, setCurrencies] = useState(null);
   const [convertedAmount, setConvertedAmount] = useState("XX.XX");
@@ -35,7 +31,6 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
     setRate("XX.XX");
   };
   const handletoChange = (event) => {
-    setToParam(null);
     setTo(event.target.value);
     setConvertedAmount(0);
     setRate("XX.XX");
@@ -64,8 +59,8 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
     let end_date_string = end_date.toISOString().slice(0, 10);
     fetch(
       `https://api.apilayer.com/fixer/timeseries?start_date=${start_date_string}&end_date=${end_date_string}&symbols=${[
-        currency ? currency : from,
-        toParam ? toParam : to,
+        from,
+        to,
       ]}`,
       requestOptions
     )
@@ -103,11 +98,6 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
   };
 
   useEffect(() => {
-    if (currency && toParam) {
-      setFrom(currency);
-      setTo(toParam);
-      setAmount(amountParam);
-    }
     const getCurrencies = () => {
       let myHeaders = new Headers();
       myHeaders.append("apikey", process.env.REACT_APP_FIXER_API_KEY);
@@ -150,7 +140,7 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
                   label={"From"}
                   data={Object.keys(currencies)}
                   handleChange={handlefromChange}
-                  defaultValue={currency ? currency : "EUR"}
+                  defaultValue={from}
                   readOnly={true}
                 />
                 <TwoWayArrow />
@@ -159,7 +149,7 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
                   label={"To"}
                   data={Object.keys(currencies)}
                   handleChange={handletoChange}
-                  defaultValue={toParam ? toParam : currency}
+                  defaultValue={currency}
                   readOnly={amount <= 0}
                 />
               </div>
@@ -199,4 +189,4 @@ const CurrencyConvertorWithDetails = ({ currency }) => {
     </>
   );
 };
-export default CurrencyConvertorWithDetails;
+export default CurrencyConvertorForNavigation;

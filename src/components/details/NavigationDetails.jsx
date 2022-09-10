@@ -1,16 +1,15 @@
 //intialize react
 import React from "react";
 import PrimaryButton from "../../common/buttons/primaryButton/PrimaryButton";
-import CurrencyConvertor from "../currencyConvertor/CurrencyConvertor";
 import { useNavigate, useParams } from "react-router-dom";
 
 //import css
 import "./Details.css";
-const Details = () => {
+import CurrencyConvertorForNavigation from "../currencyConvertor/CurrencyConvertorForNavigation";
+const NavigationDetails = () => {
   let navigate = useNavigate();
   let params = useParams();
   let currency = params.currency;
-  let fromFullName = params.currency_full_name;
 
   const handleBackHome = () => {
     navigate("/");
@@ -19,13 +18,11 @@ const Details = () => {
   return (
     <div className="details">
       <div className="headerContainer">
-        <h2 about="currency ">
-          {currency} - {fromFullName}
-        </h2>
+        <h2 about="currency">EUR - Euro</h2>
         <PrimaryButton title={"Back To Home"} onClick={handleBackHome} />
       </div>
-      <CurrencyConvertor currency={currency} />
+      <CurrencyConvertorForNavigation currency={currency} />
     </div>
   );
 };
-export default Details;
+export default NavigationDetails;
