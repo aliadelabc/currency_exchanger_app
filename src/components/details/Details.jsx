@@ -19,7 +19,7 @@ const Details = () => {
   return (
     <div className="details">
       <div className="headerContainer">
-        <h2 about="currency exchanger">
+        <h2 about="currency ">
           {currency} - {fromFullName}
         </h2>
         <PrimaryButton title={"Back To Home"} onClick={handleBackHome} />

@@ -10,31 +10,29 @@ import NavigationDetails from "./components/details/NavigationDetails";
 
 function App() {
   return (
-    <React.StrictMode>
-      <div className="app">
-        <div className="nav">
-          <Header />
-        </div>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/details/:currency" element={<NavigationDetails />} />
-            <Route
-              path="/details/:currency/:currency_full_name/:to/:amount/"
-              element={<Details />}
-            />
-            <Route
-              path="*"
-              element={
-                <main style={{ padding: "1rem" }}>
-                  <p>There's nothing here!</p>
-                </main>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
+    <div className="app">
+      <div className="nav">
+        <Header />
       </div>
-    </React.StrictMode>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/details/:currency" element={<NavigationDetails />} />
+          <Route
+            path="/details/:currency/:currency_full_name/:to/:amount/"
+            element={<Details />}
+          />
+          <Route
+            path="*"
+            element={
+              <main style={{ padding: "1rem" }}>
+                <p>There's nothing here!</p>
+              </main>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 

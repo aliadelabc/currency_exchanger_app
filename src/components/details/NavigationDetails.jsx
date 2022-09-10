@@ -18,7 +18,7 @@ const NavigationDetails = () => {
   return (
     <div className="details">
       <div className="headerContainer">
-        <h2 about="currency exchanger">EUR - Euro</h2>
+        <h2 about="currency">EUR - Euro</h2>
         <PrimaryButton title={"Back To Home"} onClick={handleBackHome} />
       </div>
       <CurrencyConvertorForNavigation currency={currency} />
