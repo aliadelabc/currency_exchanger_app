@@ -122,7 +122,7 @@ const CurrencyConvertorForNavigation = ({ currency }) => {
   }, []);
   return (
     <>
-      <div className="inputsContainer">
+      <div title="currency_convertor" className="inputsContainer">
         {currencies ? (
           <>
             <div className="convertorInputsContainer">
