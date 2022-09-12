@@ -34,7 +34,7 @@ const Chart = ({ incomingData = [{}], dataKey1, dataKey2 }) => {
   return (
     <>
       <h2 about="historical data">Monthly Historical Rates</h2>
-      <div className="chartConatiner">
+      <div title="chart" className="chartConatiner">
         {dates[0] !== "0" && dates.length > 0 ? (
           <ResponsiveContainer width={"100%"} height={400}>
             <LineChart
